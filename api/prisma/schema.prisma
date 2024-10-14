@@ -18,7 +18,7 @@ model Usuario {
 model Perfil {
   id         Int          @id @default(autoincrement())
   perfil     String
-  usuario    Usuario[]
+  usuario   Usuario[]
   comentarios Comentario[]
 }
 
