@@ -1,6 +1,34 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+// Função de login
+const doPostlogin = async (req, res) => {
+    const senha = req.body.senha;
+
+    try {
+        // Procurando o usuário com a senha fornecida
+        const usuario = await prisma.usuario.findFirst({
+            where: { senha: senha },
+        });
+
+        // Se o usuário não for encontrado, retorna 404
+        if (!usuario) {
+            return res.status(404).end();
+        }
+
+        // Se encontrado, retorna os dados do usuário e o perfil associado
+        const perfil = await prisma.perfil.findUnique({
+            where: { id: usuario.perfilId }
+        });
+
+        // Retorna os dados do usuário e o perfil em formato JSON
+        return res.status(200).json({ perfil: perfil.perfil, ...usuario }).end();
+    } catch (error) {
+        console.error("Erro ao fazer login:", error);
+        return res.status(500).json({ error: "Erro no servidor" });
+    }
+};
+
 // Criar um novo usuário
 const createUsuario = async (req, res) => {
     const { senha, perfilId } = req.body;
@@ -84,4 +112,5 @@ module.exports = {
     readUsuario,
     updateUsuario,
     deleteUsuario,
+    doPostlogin,
 };
