@@ -16,9 +16,9 @@ model Usuario {
 }
 
 model Perfil {
-  id         Int          @id @default(autoincrement())
-  perfil     String
-  usuario   Usuario[]
+  id          Int          @id @default(autoincrement())
+  perfil      String
+  usuario     Usuario[]
   comentarios Comentario[]
 }
 
@@ -35,7 +35,7 @@ model Equipamento {
 model Comentario {
   id            Int         @id @default(autoincrement())
   comentario    String
-  tipo          String      // Pode ser 'manutenção preventiva', 'manutenção corretiva', etc.
+  tipo          String // Pode ser 'manutenção preventiva', 'manutenção corretiva', etc.
   equipamentoId Int
   perfilId      Int
   data          DateTime

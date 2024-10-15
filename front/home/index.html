@@ -18,22 +18,26 @@
             <a href="../login/index.html"><img src="../assets/logout_sair.png" alt="Sair"></a>
         </div>
     </header>
+
     <main id="containner">
         <div id="modalExcluir" class="modal excluir">
             <h3>Exclusão de equipamento <input type="button" value="X" onclick="window.location.reload()"> </h3>
             <p>Atenção! Tem certeza que deseja excluir o equipamento? Essa ação não poderá ser desfeita.</p>
             <button id="confirmaExclusao">Excluir</button>
         </div>
+
         <div id="modalComentarios" class="modal comentarios">
             <h3>Comentários <input type="button" value="X" onclick="window.location.reload()"> </h3>
             <div id="listComent"></div>
             <button id="adicionarComentarios">Adicionar comentário</button>
         </div>
+
         <div id="modalNewComentario" class="modal newComent">
             <h3>Cadastro de comentário <input type="button" value="X" onclick="window.location.reload()"> </h3>
             <input type="text" id="inputComent" placeholder="Comentário">
             <button id="confirmaComentario">Cadastrar</button>
         </div>
+
         <div id="modalNewEquipamento" class="modal newEquip">
             <h3>Cadastro de comentário <input type="button" value="X" onclick="window.location.reload()" style="border:none;font-size: larger;"> </h3>
             <div style="display: flex;flex-direction: column;">
@@ -42,10 +46,15 @@
                 <textarea id="inputDescricao" placeholder="Descrição"></textarea>
                 <p><input type="checkbox" id="inputAtivo" value="Ativo"/> Ativo </p>
             </div>
+
             <button id="confirmaEquipamento">Cadastrar</button>
+
         </div>
+
     </main>
+
 </body>
+
 <script src="script.js"></script>
 
 </html>

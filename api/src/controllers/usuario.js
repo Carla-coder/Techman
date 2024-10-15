@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 // Função de login
-const doPostlogin = async (req, res) => {
+const postLogin = async (req, res) => {
     const senha = req.body.senha;
 
     try {
@@ -112,5 +112,5 @@ module.exports = {
     readUsuario,
     updateUsuario,
     deleteUsuario,
-    doPostlogin,
+    postLogin,
 };

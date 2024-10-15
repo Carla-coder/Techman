@@ -1,5 +1,5 @@
-const urlEquipamentos = 'http://localhost:3000/equipamentos';
-const urlComentarios = 'http://localhost:3000/comentarios';
+const urlEquipamentos = 'http://localhost:3000/api/equipamentos';
+const urlComentarios = 'http://localhost:3000/api/comentarios';
 const containner = document.getElementById("containner");
 const telaComentarios = document.getElementById("listComent");
 const menu = document.getElementById("menu");
