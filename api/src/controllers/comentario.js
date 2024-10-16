@@ -148,6 +148,21 @@ const readComentario = async (req, res) => {
     }
 };
 
+// Função para ler todos os comentários
+const readComentarios = async (req, res) => {
+    try {
+        const comentarios = await prisma.comentario.findMany({
+            include: {
+                perfil: true,
+                equipamento: true
+            }
+        });
+        return res.json(comentarios);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 const updateComentario = async (req, res) => {
     const { id } = req.params;
     try {
@@ -183,6 +198,7 @@ const deleteComentario = async (req, res) => {
 module.exports = {
     createComentario,
     readComentario,
+    readComentarios,
     updateComentario,
     deleteComentario
 };
