@@ -17,7 +17,7 @@ O **Sistema Techman** é uma aplicação web projetada para facilitar a gestão 
   - Nome do equipamento
   - Endereço da imagem
   - Descrição do equipamento
-  - Status (Ativo ou Inativo)
+  - Status (Ativo)
 
 ### 2. Listagem de Equipamentos
 - Todos os usuários podem visualizar a lista de equipamentos disponíveis.
