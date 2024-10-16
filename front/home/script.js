@@ -1,5 +1,5 @@
-const urlEquipamentos = 'http://localhost:3000/api/equipamentos';
-const urlComentarios = 'http://localhost:3000/api/comentarios';
+const urlEquipamentos = 'http://localhost:3000/equipamentos';
+const urlComentarios = 'http://localhost:3000/comentarios';
 const containner = document.getElementById("containner");
 const telaComentarios = document.getElementById("listComent");
 const menu = document.getElementById("menu");
@@ -42,10 +42,19 @@ function listAll() {
         })
         .catch(err => console.error(err));
 
-    //Validação de perfil
-    if (perfil != "Administrador") {
-        menu.innerHTML = `<nav><a href="../home/index.html">Home</a></nav>`;
-    }
+        document.getElementById('menu').innerHTML = `<nav><a href="#" id="abrirModal">Novo Equipamento</a></nav>`;
+
+        // Função para abrir o modal
+        document.getElementById("abrirModal").addEventListener("click", function(event) {
+            event.preventDefault();  // Impede a navegação
+            document.getElementById("modalNewEquipamento").style.display = "block";  // Mostra o modal
+        });
+    
+        // Função para fechar o modal
+        function fecharModal() {
+            document.getElementById("modalNewEquipamento").style.display = "none";  // Esconde o modal
+        }
+    
 }
 
 function renderEquipamentos() {

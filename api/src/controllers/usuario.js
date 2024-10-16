@@ -6,14 +6,16 @@ const postLogin = async (req, res) => {
     const senha = req.body.senha;
 
     try {
+        console.log("Senha recebida:", senha); // Log temporário para debug
+
         // Procurando o usuário com a senha fornecida
         const usuario = await prisma.usuario.findFirst({
             where: { senha: senha },
         });
 
-        // Se o usuário não for encontrado, retorna 404
+        // Se o usuário não for encontrado ou a senha estiver errada, retorna 401
         if (!usuario) {
-            return res.status(404).end();
+            return res.status(401).json({ message: "Senha incorreta ou usuário não encontrado." });
         }
 
         // Se encontrado, retorna os dados do usuário e o perfil associado
@@ -22,12 +24,13 @@ const postLogin = async (req, res) => {
         });
 
         // Retorna os dados do usuário e o perfil em formato JSON
-        return res.status(200).json({ perfil: perfil.perfil, ...usuario }).end();
+        return res.status(200).json({ perfil: perfil.perfil, ...usuario });
     } catch (error) {
         console.error("Erro ao fazer login:", error);
         return res.status(500).json({ error: "Erro no servidor" });
     }
 };
+
 
 // Criar um novo usuário
 const createUsuario = async (req, res) => {
