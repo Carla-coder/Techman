@@ -1,3 +1,4 @@
+
 const urlEquipamentos = "http://localhost:3000/equipamentos";
 const urlComentarios = "http://localhost:3000/comentarios";
 const containner = document.getElementById("containner");
@@ -43,60 +44,41 @@ function listAll() {
       comentarios = response;
     })
     .catch((err) => console.error(err));
-
-
-  // Limpar o conteúdo anterior do menu (se necessário)
-  menu.innerHTML = ""; 
-
-  // Verifique o perfil do usuário e adicione itens de menu conforme necessário
-  if (perfil === "Administrador") {
-    menu.innerHTML += `<nav><a href="#" id="abrirNovoEquipamento">Novo Equipamento</a></nav>`;
-  } else if (perfil === "Funcionário") {
-    menu.innerHTML += `<nav><a href="#" id="visualizarEquipamentos">Visualizar Equipamentos</a></nav>`;
-    menu.innerHTML += `<nav><a href="#" id="registrarManutencao">Registrar Manutenção</a></nav>`;
-  } else if (perfil === "Visitante") {
-    menu.innerHTML += `<nav><a href="#" id="visualizarProdutos">Visualizar Produtos</a></nav>`;
-  } else {
-    menu.innerHTML += `<nav><a href="#" id="login">Menu</a></nav>`;
-  }
-
-  // Adicione event listeners para abrir os modais
-  document.getElementById("abrirNovoEquipamento").addEventListener("click", function (event) {
-    event.preventDefault(); 
-    modalNewEquipamento(); 
-  });
-
-  // Exemplo para "Visualizar Equipamentos"
-  document.getElementById("visualizarEquipamentos").addEventListener("click", function (event) {
-    event.preventDefault(); 
-    alert("Abrir modal para visualizar equipamentos"); 
-  });
-
-  // Exemplo para "Registrar Manutenção"
-  document.getElementById("registrarManutencao").addEventListener("click", function (event) {
-    event.preventDefault(); 
-    alert("Abrir modal para registrar manutenção"); 
-  });
-
-  // Função para fechar o modal
-  function fecharModal() {
-    document.getElementById("modalNewEquipamento").style.display = "none"; // Esconde o modal
-  }
 }
 
-// Função para abrir o modal de novo equipamento
-// function modalNewEquipamento() {
-//   document
-//     .getElementById("modalNewEquipamento")
-//     .setAttribute("style", "display: flex;"); // Mostra o modal
-//   document
-//     .getElementById("confirmaEquipamento")
-//     .setAttribute("onclick", "addEquipamento()"); // Configura o evento de confirmação
-// }
+// Limpar o conteúdo anterior do menu (se necessário)
+menu.innerHTML = "";
+
+// Verifique o perfil do usuário e adicione itens de menu conforme necessário
+if (perfil === "Administrador") {
+  menu.innerHTML += `<nav><a href="#" id="abrirNovoEquipamento">Novo Equipamento</a></nav>`;
+  //   } else if (perfil === "Funcionário") {
+  //     menu.innerHTML += `<nav><a href="#" id="visualizarEquipamentos">Visualizar Equipamentos</a></nav>`;
+  //     menu.innerHTML += `<nav><a href="#" id="registrarManutencao">Registrar Manutenção</a></nav>`;
+  //   } else if (perfil === "Visitante") {
+  //     menu.innerHTML += `<nav><a href="#" id="visualizarProdutos">Visualizar Produtos</a></nav>`;
+} else {
+  menu.innerHTML += `<nav><a href="#" id="login">Menu</a></nav>`;
+}
+
+// Adicione event listeners para abrir os modais
+document
+  .getElementById("abrirNovoEquipamento")
+  .addEventListener("click", function (event) {
+    event.preventDefault();
+    modalNewEquipamento();
+  });
+
+// Função para fechar o modal
+function fecharModal() {
+  document.getElementById("modalNewEquipamento").style.display = "none"; // Esconde o modal
+}
 
 function modalNewEquipamento() {
-  document.getElementById("modalNewEquipamento").setAttribute("style", "display: flex;");
-  
+  document
+    .getElementById("modalNewEquipamento")
+    .setAttribute("style", "display: flex;");
+
   const campos = [
     document.getElementById("equipamento"),
     document.getElementById("descricao"),
@@ -104,17 +86,16 @@ function modalNewEquipamento() {
   ];
   const botaoCadastrar = document.getElementById("confirmaEquipamento");
 
-  campos.forEach(campo => {
-    campo.addEventListener('input', function() {
-      botaoCadastrar.disabled = campos.some(c => c.value.trim() === ""); // Habilita o botão se todos os campos estiverem preenchidos
+  campos.forEach((campo) => {
+    campo.addEventListener("input", function () {
+      botaoCadastrar.disabled = campos.some((c) => c.value.trim() === ""); // Habilita o botão se todos os campos estiverem preenchidos
     });
   });
 
-  botaoCadastrar.onclick = function() {
-    addEquipamento(); // Chama a função para adicionar equipamento
+  botaoCadastrar.onclick = function () {
+    addEquipamento();
   };
 }
-
 
 function renderEquipamentos() {
   equipamentos.forEach((e) => {
@@ -157,43 +138,30 @@ function renderEquipamentos() {
 }
 
 function renderComentarios(id) {
-  comentarios.forEach((e) => {
-    if (e.equipamento_id === id) {
-      let card = document.createElement("div");
-      let title = document.createElement("h3");
-      let description = document.createElement("p");
-      card.setAttribute("class", "cardComentario");
-      title.innerHTML = e.perfil + " - " + formatDate(e.data);
-      description.innerHTML = e.comentario;
-      card.appendChild(title);
-      card.appendChild(description);
-      telaComentarios.appendChild(card);
-    }
+  const listComent = document.getElementById("listComent");
+  listComent.innerHTML = ""; // Limpa o conteúdo anterior
+
+  // Filtra os comentários para o equipamento específico
+  let comentariosEquipamento = comentarios.filter(
+    (e) => e.equipamento_id === id
+  );
+
+  // Ordena os comentários pela data mais recente
+  comentariosEquipamento.sort((a, b) => new Date(b.data) - new Date(a.data));
+
+  comentariosEquipamento.forEach((comentario) => {
+    const comentarioDiv = document.createElement("div");
+    comentarioDiv.classList.add("comentario");
+
+    comentarioDiv.innerHTML = `
+      <p><strong>Usuário:</strong> ${comentario.usuario}</p>
+      <p><strong>Data:</strong> ${comentario.data}</p>
+      <p><strong>Comentário:</strong> ${comentario.descricao}</p>
+    `;
+
+    listComent.appendChild(comentarioDiv);
   });
 }
-
-// function renderComentarios(id) {
-//   telaComentarios.innerHTML = ""; // Limpa comentários anteriores
-//   comentarios
-//     .filter(e => e.equipamento_id === id) // Filtra comentários do equipamento
-//     .sort((a, b) => new Date(b.data) - new Date(a.data)) // Ordena por data (mais recentes primeiro)
-//     .forEach(e => {
-//       let card = document.createElement("div");
-//       let title = document.createElement("h3");
-//       let description = document.createElement("p");
-//       card.setAttribute("class", "cardComentario");
-//       title.innerHTML = `${e.perfil} - ${formatDate(e.data)}`; // Inclui perfil e data
-//       description.innerHTML = e.comentario;
-//       card.appendChild(title);
-//       card.appendChild(description);
-//       telaComentarios.appendChild(card);
-//     });
-  
-  // Adiciona botão para adicionar comentário
-  // let addButton = document.createElement("button");
-  // addButton.innerHTML = "Adicionar Comentário";
-  // addButton.onclick = () => modalNewComentario(id);
-  // telaComentarios.appendChild(addButton);
 
 function modalExcluir(id) {
   document
@@ -218,39 +186,31 @@ function modalComentario(id) {
         ");this.parentNode.setAttribute('style', 'display: none;');"
     );
 
-      // Botão para fechar o modal e retornar à lista de equipamentos
-  document.getElementById("fecharModalComentarios").onclick = function() {
+  // Botão para fechar o modal e retornar à lista de equipamentos
+  document.getElementById("fecharModalComentarios").onclick = function () {
     document.getElementById("modalComentarios").style.display = "none";
   };
 }
 
-// function modalNewComentario(id) {
-//   document
-//     .getElementById("modalNewComentario")
-//     .setAttribute("style", "display: flex;");
-//   document
-//     .getElementById("confirmaComentario")
-//     .setAttribute("onclick", "addComentario(" + id + ")");
-// }
-
 function modalNewComentario(id) {
-  document.getElementById("modalNewComentario").setAttribute("style", "display: flex;");
-  
+  document
+    .getElementById("modalNewComentario")
+    .setAttribute("style", "display: flex;");
+
   const campoComentario = document.getElementById("inputComent");
   const botaoCadastrar = document.getElementById("confirmaComentario");
 
   // Verifica se o campo de comentário tem texto para habilitar o botão
-  campoComentario.addEventListener('input', function() {
+  campoComentario.addEventListener("input", function () {
     botaoCadastrar.disabled = campoComentario.value.trim().length === 0;
   });
 
-  botaoCadastrar.onclick = function() {
+  botaoCadastrar.onclick = function () {
     if (campoComentario.value.trim()) {
-      addComentario(id); 
+      addComentario(id);
     }
   };
 }
-
 
 // Excluir equipamento
 function excluir(id) {
@@ -336,15 +296,5 @@ function formatDate(date) {
   return dia + "/" + mes + "/" + ano;
 }
 
-// function formatDate(data) {
-//   const date = new Date(data);
-//   return date.toLocaleDateString("pt-BR", {
-//     year: "numeric",
-//     month: "2-digit",
-//     day: "2-digit",
-//   });
-
-
 // Chamar a função para listar equipamentos ao carregar a página
 window.onload = listAll;
-

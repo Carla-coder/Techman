@@ -28,7 +28,13 @@
 
         <div id="modalComentarios" class="modal comentarios">
             <h3>Comentários <input type="button" value="X" onclick="window.location.reload()"> </h3>
-            <div id="listComent"></div>
+            <div id="listComent">
+                <div class="comentario">
+                    <p><strong>Usuário:</strong> <span id="nomeUsuario"></span></p>
+                    <p><strong>Data:</strong> <span id="dataComentario"></span></p>
+                    <p><strong>Comentário:</strong> <span id="descricaoComentario"></span></p>
+                </div>
+            </div>
             <button id="adicionarComentarios">Adicionar comentário</button>
         </div>
 
@@ -39,12 +45,13 @@
         </div>
 
         <div id="modalNewEquipamento" class="modal newEquip">
-            <h3>Cadastro de Equipamento <input type="button" value="X" onclick="window.location.reload()" style="border:none;font-size: larger;"> </h3>
+            <h3>Cadastro de Equipamento <input type="button" value="X" onclick="window.location.reload()"
+                    style="border:none;font-size: larger;"> </h3>
             <div style="display: flex;flex-direction: column;">
-                <input type="text" id="inputNome" placeholder="Nome"/>
-                <input type="text" id="inputImagem" placeholder="Endereco da Imagem"/>
+                <input type="text" id="inputNome" placeholder="Nome" />
+                <input type="text" id="inputImagem" placeholder="Endereco da Imagem" />
                 <textarea id="inputDescricao" placeholder="Descrição"></textarea>
-                <p><input type="checkbox" id="inputAtivo" value="Ativo"/> Ativo </p>
+                <p><input type="checkbox" id="inputAtivo" value="Ativo" /> Ativo </p>
             </div>
 
             <button id="confirmaEquipamento">Cadastrar</button>
