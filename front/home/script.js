@@ -138,28 +138,19 @@ function renderEquipamentos() {
 }
 
 function renderComentarios(id) {
-  const listComent = document.getElementById("listComent");
-  listComent.innerHTML = ""; // Limpa o conteúdo anterior
-
-  // Filtra os comentários para o equipamento específico
-  let comentariosEquipamento = comentarios.filter(
-    (e) => e.equipamento_id === id
-  );
-
-  // Ordena os comentários pela data mais recente
-  comentariosEquipamento.sort((a, b) => new Date(b.data) - new Date(a.data));
-
-  comentariosEquipamento.forEach((comentario) => {
-    const comentarioDiv = document.createElement("div");
-    comentarioDiv.classList.add("comentario");
-
-    comentarioDiv.innerHTML = `
-      <p><strong>Usuário:</strong> ${comentario.usuario}</p>
-      <p><strong>Data:</strong> ${comentario.data}</p>
-      <p><strong>Comentário:</strong> ${comentario.descricao}</p>
-    `;
-
-    listComent.appendChild(comentarioDiv);
+  telaComentarios.innerHTML = ''; 
+  comentarios.forEach((e) => {
+      if (e.equipamentoId === id) {
+          let card = document.createElement("div");
+          let title = document.createElement("h3");
+          let description = document.createElement("p");
+          card.setAttribute("class", "cardComentario");
+          title.innerHTML = e.perfil + " - " + formatDate(e.data);
+          description.innerHTML = e.comentario;
+          card.appendChild(title);
+          card.appendChild(description);
+          telaComentarios.appendChild(card);
+      }
   });
 }
 
