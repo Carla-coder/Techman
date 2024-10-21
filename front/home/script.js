@@ -4,9 +4,12 @@ const urlComentarios = "http://localhost:3000/comentarios";
 const containner = document.getElementById("containner");
 const telaComentarios = document.getElementById("listComent");
 const menu = document.getElementById("menu");
+
 var equipamentos = [];
 var comentarios = [];
 var perfil = window.location.href.split("=")[1];
+
+console.log(perfil);
 
 function perfis(perfil) {
   if (perfil == "Comum") return 1;
@@ -61,10 +64,12 @@ if (perfil === "Administrador") {
   menu.innerHTML += `<nav><a href="#" id="login">Menu</a></nav>`;
 }
 
+console.log(menu.innerHTML); // Verifique no console se o menu está correto
+
 // Adicione event listeners para abrir os modais
 document
   .getElementById("abrirNovoEquipamento")
-  .addEventListener("click", function (event) {
+  ?.addEventListener("click", function (event) {
     event.preventDefault();
     modalNewEquipamento();
   });
@@ -81,11 +86,11 @@ function modalNewEquipamento() {
 
   const campos = [
     document.getElementById("equipamento"),
-    document.getElementById("descricao"),
-    document.getElementById("imagem"),
+    document.getElementById("inputDescricao"),
+    document.getElementById("inputImagem"),
   ];
-  const botaoCadastrar = document.getElementById("confirmaEquipamento");
 
+  const botaoCadastrar = document.getElementById("confirmaEquipamento");
   campos.forEach((campo) => {
     campo.addEventListener("input", function () {
       botaoCadastrar.disabled = campos.some((c) => c.value.trim() === ""); // Habilita o botão se todos os campos estiverem preenchidos
@@ -108,6 +113,7 @@ function renderEquipamentos() {
       let buttons = document.createElement("div");
       let button1 = document.createElement("button");
       let button2 = document.createElement("button");
+
       equips.setAttribute("class", "equips");
       img.setAttribute("src", "../assets/" + e.imagem);
       button1.setAttribute("class", "btComentario");
@@ -139,6 +145,7 @@ function renderEquipamentos() {
 
 function renderComentarios(id) {
   telaComentarios.innerHTML = ''; 
+
   comentarios.forEach((e) => {
       if (e.equipamentoId === id) {
           let card = document.createElement("div");
@@ -218,19 +225,46 @@ function excluir(id) {
 }
 
 // Adicionar Comentário
+// function addComentario(id) {
+//   if (document.getElementById("inputComent").value.length > 0) {
+//     const options = {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body:
+//         '{"comentario":"' +
+//         document.getElementById("inputComent").value +
+//         '","equipamento":' +
+//         id +
+//         ',"perfil":' +
+//         perfis(perfil) +
+//         "}",
+//     };
+//     fetch(urlComentarios, options)
+//       .then((resp) => {
+//         if (resp.status == 201) {
+//           alert("Sucesso! Comentário cadastrado para o equipamento.");
+//           window.location.reload();
+//         } else {
+//           alert("Erro ao adicionar comentário: " + resp.status);
+//         }
+//       })
+//       .catch((err) => console.error(err));
+//   } else {
+//     alert("Preencha o campo comentário");
+//   }
+// }
+
 function addComentario(id) {
-  if (document.getElementById("inputComent").value.length > 0) {
+  const comentario = document.getElementById("inputComent").value.trim();
+  if (comentario) {
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body:
-        '{"comentario":"' +
-        document.getElementById("inputComent").value +
-        '","equipamento":' +
-        id +
-        ',"perfil":' +
-        perfis(perfil) +
-        "}",
+      body: JSON.stringify({
+        comentario: comentario,
+        equipamento: id,
+        perfil: perfil // Gravar o perfil como string
+      })
     };
     fetch(urlComentarios, options)
       .then((resp) => {
@@ -246,6 +280,7 @@ function addComentario(id) {
     alert("Preencha o campo comentário");
   }
 }
+
 
 // Adicionar Equipamento
 function addEquipamento() {
@@ -289,3 +324,5 @@ function formatDate(date) {
 
 // Chamar a função para listar equipamentos ao carregar a página
 window.onload = listAll;
+
+
