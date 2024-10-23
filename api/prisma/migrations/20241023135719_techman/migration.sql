@@ -21,7 +21,7 @@ CREATE TABLE `Equipamento` (
     `equipamento` VARCHAR(191) NOT NULL,
     `imagem` VARCHAR(191) NOT NULL,
     `descricao` VARCHAR(191) NOT NULL,
-    `ativo` BOOLEAN NOT NULL,
+    `ativo` INTEGER NOT NULL,
     `data` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -31,11 +31,9 @@ CREATE TABLE `Equipamento` (
 CREATE TABLE `Comentario` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `comentario` VARCHAR(191) NOT NULL,
-    `tipo` VARCHAR(191) NOT NULL,
-    `equipamentoId` INTEGER NOT NULL,
-    `perfilId` INTEGER NOT NULL,
+    `equipamento` INTEGER NOT NULL,
+    `perfil` INTEGER NOT NULL,
     `data` DATETIME(3) NOT NULL,
-    `usuarioId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -44,10 +42,7 @@ CREATE TABLE `Comentario` (
 ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_perfilId_fkey` FOREIGN KEY (`perfilId`) REFERENCES `Perfil`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Comentario` ADD CONSTRAINT `Comentario_equipamentoId_fkey` FOREIGN KEY (`equipamentoId`) REFERENCES `Equipamento`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Comentario` ADD CONSTRAINT `Comentario_equipamento_fkey` FOREIGN KEY (`equipamento`) REFERENCES `Equipamento`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Comentario` ADD CONSTRAINT `Comentario_perfilId_fkey` FOREIGN KEY (`perfilId`) REFERENCES `Perfil`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Comentario` ADD CONSTRAINT `Comentario_usuarioId_fkey` FOREIGN KEY (`usuarioId`) REFERENCES `Usuario`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Comentario` ADD CONSTRAINT `Comentario_perfil_fkey` FOREIGN KEY (`perfil`) REFERENCES `Perfil`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

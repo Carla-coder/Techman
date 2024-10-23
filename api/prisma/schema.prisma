@@ -11,8 +11,7 @@ model Usuario {
   id          Int          @id @default(autoincrement())
   senha       String
   perfilId    Int
-  perfil      Perfil       @relation(fields: [perfilId], references: [id])
- 
+  perfis     Perfil       @relation(fields: [perfilId], references: [id])
 }
 
 model Perfil {
@@ -27,7 +26,7 @@ model Equipamento {
   equipamento String
   imagem      String
   descricao   String
-  ativo       Boolean
+  ativo       Int
   data        DateTime
   comentarios Comentario[]
 }
@@ -35,10 +34,9 @@ model Equipamento {
 model Comentario {
   id            Int         @id @default(autoincrement())
   comentario    String
-  tipo          String // Pode ser 'manutenção preventiva', 'manutenção corretiva', etc.
-  equipamentoId Int
-  perfilId      Int
+  equipamento   Int
+  perfil        Int
   data          DateTime
-  equipamento   Equipamento @relation(fields: [equipamentoId], references: [id])
-  perfil        Perfil      @relation(fields: [perfilId], references: [id])
+  equipamentos   Equipamento @relation(fields: [equipamento], references: [id])
+  perfis        Perfil      @relation(fields: [perfil], references: [id])
 }

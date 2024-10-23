@@ -1,4 +1,4 @@
-const urlLogin = 'http://localhost:3000/login'; 
+const urlLogin = 'http://localhost:3000/usuario'; 
 const senha = document.getElementById("senha");
 
 function login() {
@@ -24,3 +24,4 @@ function login() {
         })
         .catch(err => console.log(err));
 }
+

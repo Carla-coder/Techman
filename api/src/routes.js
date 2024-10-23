@@ -1,28 +1,32 @@
 const express = require('express');
+
+const comentarios = require('./controllers/comentario');
+const equipamentos = require('./controllers/equipamento');
+const usuarios = require('./controllers/usuario');
+const perfis = require('./controllers/equipamento');
+
 const router = express.Router();
-const usuario = require('./controllers/usuario.js'); 
-const equipamento = require('./controllers/equipamento.js'); 
-const comentario = require('./controllers/comentario.js'); 
 
-// Rotas oara usuários
-router.get('/usuarios/:id', usuario.readUsuario); 
-router.get('/usuarios', usuario.readUsuarios); 
-router.post('/usuarios', usuario.createUsuario);
-router.post('/login', usuario.postLogin);
+router.get('/comentarios', comentarios.read);
+router.get('/comentarios/:id', comentarios.readbyequip);
+router.post('/comentarios', comentarios.create);
+router.put('/comentarios/:id/:perfil', comentarios.update);
+router.patch('/comentario/:id/:perfil', comentarios.update);
+router.delete('/comentarios/:id', comentarios.del);
 
-// Rotas para equipamentos
-router.get('/equipamentos/:id', equipamento.readEquipamento); 
-router.get('/equipamentos', equipamento.readEquipamentos); 
-router.post('/equipamentos', equipamento.createEquipamento);
-router.put('/equipamentos/:id', equipamento.updateEquipamento);
-router.delete('/equipamentos/:id', equipamento.deleteEquipamento); 
+router.get('/equipamentos', equipamentos.read);
+router.post('/equipamentos', equipamentos.create);
+router.put('/equipamentos/:id', equipamentos.update);
+router.delete('/equipamentos/:id', equipamentos.del);
 
-// Rotas para comentários
-router.get('/comentarios/:id', comentario.readComentario); 
-router.get('/comentarios', comentario.readComentarios);
-router.post('/comentarios', comentario.createComentario);
-router.delete('/comentarios/:id', comentario.deleteComentario);
+router.get('/perfis', perfis.read);
+router.post('/perfis', perfis.create);
+router.put('/perfis/:id', perfis.update);
+router.delete('/perfis/:id', perfis.del);
 
+router.get('/usuario', usuarios.read);
+router.post('/usuario', usuarios.create);
+router.put('/usuario/:id', usuarios.update);
+router.delete('/usuario/:id', usuarios.del);
 
 module.exports = router;
-

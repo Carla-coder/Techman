@@ -1,90 +1,78 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-const createEquipamento = async (req, res) => {
+const read = async (req, res) => {
   try {
-    const { nome, descricao } = req.body;
-
-    if (!nome || !descricao) {
-      return res
-        .status(400)
-        .json({ message: "Nome e descrição são obrigatórios." });
-    }
-
-    const equipamento = await prisma.equipamento.create({
-      data: {
-        nome,
-        descricao,
-      },
-    });
-    return res.status(201).json(equipamento);
+    const result = await prisma.equipamento.findMany();
+    res.status(200).json(result);
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
-const readEquipamento = async (req, res) => {
+const create = async (req, res) => {
+  try {
+      const { nome, imagem, descricao, status } = req.body;
+
+      const ativo = status === 'ativo' ? 1 : 0;
+
+      const result = await prisma.equipamento.create({
+          data: {
+              equipamento: nome,
+              imagem: imagem,
+              descricao: descricao,
+              ativo: ativo, 
+              data: new Date()
+          }
+      });
+
+      res.json(result);
+  } catch (error) {
+      console.error("Erro ao criar equipamento:", error);
+      res.status(500).json({ error: "Erro ao criar equipamento" });
+  }
+};
+
+const update = async (req, res) => {
   try {
     const { id } = req.params;
+    const result = await prisma.equipamento.update({
+      where: { id: Number(id) },
+      data: req.body,
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
-    if (id) {
-      const equipamento = await prisma.equipamento.findUnique({
-        where: { id: parseInt(id, 10) },
-      });
-      if (equipamento) {
-        return res.json(equipamento);
-      } else {
-        return res.status(404).json({ message: "Equipamento não encontrado." });
+const del = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+      // Tenta excluir o equipamento com o ID fornecido
+      const result = await db.equipamentos.destroy({ where: { id } });
+
+      // Verifica se algum registro foi excluído
+      if (result === 0) {
+          return res.status(404).send({ message: 'Equipamento não encontrado.' });
       }
-    } else {
-      const equipamentos = await prisma.equipamento.findMany();
-      return res.json(equipamentos);
-    }
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
 
-  // Função para ler todos os equipamentos
-  const readEquipamentos = async (req, res) => {
-    try {
-      const equipamentos = await prisma.equipamento.findMany();
-      return res.json(equipamentos);
-    } catch (error) {
-      return res.status(500).json({ message: error.message });
-    }
-  };
-
-const updateEquipamento = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const { nome, descricao } = req.body;
-    const equipamento = await prisma.equipamento.update({
-      where: { id: parseInt(id, 10) },
-      data: { nome, descricao },
-    });
-    return res.status(202).json(equipamento);
+      // Responde com 204 No Content se a exclusão foi bem-sucedida
+      return res.status(204).send();
   } catch (error) {
-    return res.status(404).json({ message: "Equipamento não encontrado." });
+      console.error('Erro ao excluir equipamento:', error);
+      // Retorna uma resposta de erro genérica em caso de falha
+      return res.status(500).send({ message: 'Erro interno do servidor.' });
   }
-};
+}
 
-const deleteEquipamento = async (req, res) => {
-  const { id } = req.params;
-  try {
-    await prisma.equipamento.delete({
-      where: { id: parseInt(id, 10) },
-    });
-    return res.status(204).send();
-  } catch (error) {
-    return res.status(404).json({ message: "Equipamento não encontrado." });
-  }
-};
+
+
 
 module.exports = {
-  createEquipamento,
-  readEquipamento,
-  readEquipamentos,
-  updateEquipamento,
-  deleteEquipamento,
+  read,
+  create,
+  update,
+  del,
 };
