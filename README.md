@@ -17,7 +17,7 @@ O **Sistema Techman** é uma aplicação web projetada para facilitar a gestão 
   - Nome do equipamento
   - Endereço da imagem
   - Descrição do equipamento
-  - Status (Ativo)
+  - Status (Ativo ou Inativo)
 
 ### 2. Listagem de Equipamentos
 - Todos os usuários podem visualizar a lista de equipamentos disponíveis.
@@ -106,6 +106,18 @@ Este repositório contém o código **frontend** do Sistema Techman, responsáve
 ```bash
 frontend/
 │
+├── assets/              # Arquivos estáticos como imagens, ícones, etc.
+│
+├── comentario/
+│   ├── index.html       # Página de comentários
+│   ├── comentario.css    # Estilos para a página de comentários
+│   ├── script.js        # Lógica e interações da página de comentários
+│
+├── equipamento/
+│   ├── index.html       # Página de equipamentos
+│   ├── equipa.css       # Estilos para a página de equipamentos
+│   ├── script.js        # Lógica e interações da página de equipamentos
+│
 ├── home/
 │   ├── index.html       # Página principal - Listagem de equipamentos
 │   ├── home.css         # Estilos para a página principal
@@ -140,11 +152,11 @@ Validação de Formulário: O campo de login exige a entrada de um e-mail e senh
 
 - Cadastro de Equipamentos: O modal de cadastro de equipamentos permite ao administrador adicionar um novo equipamento com os campos nome, imagem, descrição e status (ativo/inativo).
 
-4. **Estilização (home/home.css, login/login.css)**
+4. **Estilização**
 
 - O CSS foi utilizado para garantir um layout limpo e responsivo. As cores e os componentes seguem um design padrão para melhorar a experiência do usuário.
 
-5. **JavaScript Funcional (home/script.js, login/script.js)**
+5. **JavaScript Funcional**
 
 - Requisições à API: Utiliza fetch para comunicação com o backend (Node.js e MySQL) via requisições HTTP.
 
