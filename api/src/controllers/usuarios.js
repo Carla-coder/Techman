@@ -1,6 +1,26 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+const login = async (req, res) => {
+    const { senha } = req.body;
+
+    try {
+        const usuario = await prisma.usuario.findFirst({
+            where: { 
+                senha: senha }
+        });
+
+        if (!usuario) {
+            return res.status(401).json({ error: "Senha incorreta" });
+        }
+
+        res.status(200).json({ perfil: usuario.perfilId });
+    } catch (error) {
+        console.error('Erro ao processar login:', error);
+        res.status(500).json({ error: "Erro no servidor ao processar login" });
+    }
+};
+
 const read = async (req, res) => {
     try {
         const result = await prisma.usuario.findMany();
@@ -50,5 +70,6 @@ module.exports = {
     read,
     create,
     update,
-    del
-}
+    del,
+    login
+};

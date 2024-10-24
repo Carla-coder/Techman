@@ -1,27 +1,32 @@
-const urlLogin = 'http://localhost:3000/usuario'; 
-const senha = document.getElementById("senha");
+const buttons = document.querySelectorAll('.key-button');
+const form = document.querySelector('#password-form');
+const clearButton = document.querySelector('#clear');
+const submitButton = document.querySelector('#submit');
 
-function login() {
-    const senhaValor = senha.value; // Obtém o valor do campo 'senha'
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        const value = button.innerHTML;
+        if (value !== 'C' && value !== '↵') {
+            form.password.value += value;
+        }
+    });
+});
 
-    const options = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ senha: senhaValor }) // Envia a senha no formato JSON
-    };
+clearButton.addEventListener('click', () => {
+    form.password.value = '';
+});
 
-    fetch(urlLogin, options)
-        .then(resp => {
-            if (!resp.ok) {
-                alert("Senha incorreta");
-                throw new Error('Login falhou');
+submitButton.addEventListener('click', () => {
+    const password = form.password.value;
+    fetch('http://localhost:3000/usuario')
+        .then(response => response.json())
+        .then(data => {
+            const user = data.find((user) => user.senha === password);
+            if (user) {
+                window.localStorage.setItem('user', JSON.stringify(user));
+                window.location.href = '../home/index.html';
+            } else {
+                alert('Senha Incorreta');
             }
-            return resp.json();
-        })
-        .then(resp => {
-            // Redireciona para a página home com o perfil do usuário
-            window.location.href = "../home/index.html?perfil=" + resp.perfil;
-        })
-        .catch(err => console.log(err));
-}
-
+        });
+});

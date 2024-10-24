@@ -51,7 +51,7 @@ const del = async (req, res) => {
 
   try {
       // Tenta excluir o equipamento com o ID fornecido
-      const result = await db.equipamentos.destroy({ where: { id } });
+      const result = await db.equipamentos.delete({ where: { id } });
 
       // Verifica se algum registro foi excluído
       if (result === 0) {

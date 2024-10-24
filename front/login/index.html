@@ -14,27 +14,25 @@
     <header>
         <img src="../assets/techman.png" alt="LogoMarca">
     </header>
-    <main>
-        <div class="senha">
-            <input type="hidden" id="senha"/>
-            <input type="text" id="asterisco" disabled/>
-        </div>
-
-        <div class="botoes">
-            <button id="b1" onclick = "senha.value+='1';asterisco.value+='*'">1</button>
-            <button id="b2" onclick = "senha.value+='2';asterisco.value+='*'">2</button>
-            <button id="b3" onclick = "senha.value+='3';asterisco.value+='*'">3</button>
-            <button id="b4" onclick = "senha.value+='4';asterisco.value+='*'">4</button>
-            <button id="b5" onclick = "senha.value+='5';asterisco.value+='*'">5</button>
-            <button id="b6" onclick = "senha.value+='6'">6</button>
-            <button id="b7" onclick = "senha.value+='7';asterisco.value+='*'">7</button>
-            <button id="b8" onclick = "senha.value+='8';asterisco.value+='*'">8</button>
-            <button id="b9" onclick = "senha.value+='9';asterisco.value+='*'">9</button>
-            <button id="bc" onclick = "senha.value='';asterisco.value=''">C</button>
-            <button id="b0" onclick = "senha.value+='0';asterisco.value+='*'">0</button>
-            <button id="bplay" onclick = "login()" >&crarr;</button>
-        </div>
-    </main>
+        <main class="login-container">
+            <form id="password-form">
+                <input type="password" id="password" name="password" class="input-field">
+            </form>
+            <div class="button-grid">
+                <div class="key-button" id="1">1</div>
+                <div class="key-button" id="2">2</div>
+                <div class="key-button" id="3">3</div>
+                <div class="key-button" id="4">4</div>
+                <div class="key-button" id="5">5</div>
+                <div class="key-button" id="6">6</div>
+                <div class="key-button" id="7">7</div>
+                <div class="key-button" id="8">8</div>
+                <div class="key-button" id="9">9</div>
+                <div class="key-button clear-button" id="clear">C</div> 
+                <div class="key-button" id="0">0</div>
+                <div class="key-button submit-button" id="submit">&crarr;</div> 
+            </div>
+        </main>
 </body>
 <script src="script.js"></script>
 </html>

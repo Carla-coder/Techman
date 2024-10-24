@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 const comentario_json = require("../dados/comentarios.json");
 const equipamento_json = require("../dados/equipamentos.json");
 const perfil_json = require("../dados/perfis.json");
-const usuario_json = require("../dados/usuario.json");
+const usuario_json = require("../dados/usuarios.json");
 
 async function importComentarios() {
   await prisma.comentario.createMany({
