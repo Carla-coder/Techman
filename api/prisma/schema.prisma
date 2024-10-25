@@ -8,10 +8,10 @@ datasource db {
 }
 
 model Usuario {
-  id          Int          @id @default(autoincrement())
-  senha       String
-  perfilId    Int
-  perfis     Perfil       @relation(fields: [perfilId], references: [id])
+  id       Int    @id @default(autoincrement())
+  senha    String
+  perfilId Int
+  perfis   Perfil @relation(fields: [perfilId], references: [id])
 }
 
 model Perfil {
@@ -32,11 +32,11 @@ model Equipamento {
 }
 
 model Comentario {
-  id            Int         @id @default(autoincrement())
-  comentario    String
-  equipamento   Int
-  perfil        Int
-  data          DateTime
-  equipamentos   Equipamento @relation(fields: [equipamento], references: [id])
-  perfis        Perfil      @relation(fields: [perfil], references: [id])
+  id           Int         @id @default(autoincrement())
+  comentario   String
+  equipamento  Int
+  perfil       Int
+  data         DateTime    @default(now())
+  equipamentos Equipamento @relation(fields: [equipamento], references: [id])
+  perfis       Perfil      @relation(fields: [perfil], references: [id])
 }

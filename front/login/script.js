@@ -1,23 +1,28 @@
+
 const buttons = document.querySelectorAll('.key-button');
 const form = document.querySelector('#password-form');
+const realPasswordInput = document.querySelector('#real-password');
+const asteriskPasswordInput = document.querySelector('#asterisk-password');
 const clearButton = document.querySelector('#clear');
-const submitButton = document.querySelector('#submit');
+const submitButton = document.querySelector('#submit')
 
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
         const value = button.innerHTML;
         if (value !== 'C' && value !== '↵') {
-            form.password.value += value;
+            realPasswordInput.value += value;  // Adiciona o número real à senha
+            asteriskPasswordInput.value += '*'; // Adiciona um asterisco ao campo visível
         }
     });
 });
 
 clearButton.addEventListener('click', () => {
-    form.password.value = '';
+    realPasswordInput.value = '';
+    asteriskPasswordInput.value = '';
 });
 
 submitButton.addEventListener('click', () => {
-    const password = form.password.value;
+    const password = realPasswordInput.value; // Usa a senha real
     fetch('http://localhost:3000/usuario')
         .then(response => response.json())
         .then(data => {
@@ -28,5 +33,6 @@ submitButton.addEventListener('click', () => {
             } else {
                 alert('Senha Incorreta');
             }
+            
         });
 });

@@ -53,7 +53,7 @@ body {
 }
 
 .novoequip h3 {
-    color: #44babc;
+    color: #3b9b9e;
     font-size: 1.5rem;
 }
 
@@ -64,6 +64,7 @@ form {
     justify-content: center;
     gap: 25px;
     width: 100%;
+    margin-top: 20px;
 }
 
 input {
@@ -101,7 +102,7 @@ input:focus {
 }
 
 #submit {
-    background-color: #44babc;
+    background-color: #3b9b9e;
     color: white;
     border: none;
     border-radius: 10px;
@@ -112,7 +113,7 @@ input:focus {
 }
 
 #submit:hover {
-    background-color: #3b9b9e;
+    background-color: #44babc;
 }
 
 @media (max-width: 768px) {
